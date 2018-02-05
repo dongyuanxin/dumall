@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Vuex - actions</title>
+  <script src="./../../node_modules/vue/dist/vue.min.js"></script>
+  <script src="./../../node_modules/vuex/dist/vuex.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <h2>{{msg}}</h2>
+  <a href="javascript:;" @click="add">点击</a>
+  <counter></counter>
+</div>
+<script>
+  const store = new Vuex.Store({
+    state:{ //vuex存取的数据
+      count:10,
+      name:'Jack'
+    },
+    getters:{ // 辅助 state ,类似于vue中的computed
+      userName(state){
+        return state.name + '.Hello';
+      }
+    },
+    mutations :{
+      // 及时更改state
+      increment(state) {
+        state.count++;
+      },
+      updateName(state,newName) {
+        state.name = newName;
+      }
+    },
+    actions:{ // 用来提交mutations，并且 可以写入 异步操作
+      incrementAction(context,newName) { // context是个上下文对象
+        context.commit("increment");
+        context.commit("updateName",newName);
+      }
+    }
+  });
+  // Vue子组件
+  const counter = {
+    // 注意要有一个div包裹
+    template: '<div>' +
+    '<div>{{count}}</div>' +
+    '<div>{{name}}</div>' +
+    '<div>getters调用：{{userName}}</div>' +
+    '</div>',
+    computed: {
+      count() {
+        return this.$store.state.count;
+      },
+      name(){
+        return this.$store.state.name;
+      },
+      userName(){
+        return this.$store.getters.userName;
+      }
+    }
+  };
+  new Vue({
+    el:"#app",
+    store:store,
+    data:{
+      msg:"Vuex的使用"
+    },
+    components:{
+      counter
+    },
+    methods:{
+      add(){
+        this.$store.dispatch("incrementAction","godbmw"); // actions的调用方法
+      }
+    }
+  })
+</script>
+</body>
+</html>

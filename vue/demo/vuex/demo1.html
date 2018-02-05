@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Vuex - State</title>
+  <script src="./../../node_modules/vue/dist/vue.min.js"></script>
+  <script src="./../../node_modules/vuex/dist/vuex.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <h2>{{msg}}</h2>
+  <counter></counter>
+</div>
+<script>
+  const counter = {
+    template: '<div>{{count}}</div>',
+    computed: {
+      count() {
+        return this.$store.state.count;
+      }
+    }
+  };
+  const store = new Vuex.Store({
+    state:{
+      count:0
+    }
+  });
+  new Vue({
+    el:"#app",
+    store:store, // es6中 key和value一样的时候，可以写成 store
+    data:{
+      msg:"Vuex的使用"
+    },
+    components:{
+      counter
+    }
+  })
+</script>
+</body>
+</html>

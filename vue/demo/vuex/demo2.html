@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Vuex - mutations</title>
+  <script src="./../../node_modules/vue/dist/vue.min.js"></script>
+  <script src="./../../node_modules/vuex/dist/vuex.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <h2>{{msg}}</h2>
+  <a href="javascript:;" @click="add">点击</a>
+  <counter></counter>
+</div>
+<script>
+  const store = new Vuex.Store({
+    state:{ //vuex存取的数据
+      count:10,
+      name:'Jack'
+    },
+    mutations :{
+      // 想要更改state中的数据，要使用mutations
+      increment(state) { // 参数就是store里面的state
+        state.count++;
+      },
+      updateName(state,newName) {
+        state.name = newName;
+      }
+    }
+  });
+  // Vue子组件
+  const counter = {
+    // 注意要有一个div包裹
+    template: '<div>' +
+    '<div>{{count}}</div><div>{{name}}</div>' +
+    '</div>',
+    computed: {
+      count() {
+        return this.$store.state.count;
+      },
+      name(){
+        return this.$store.state.name;
+      }
+    }
+  };
+  new Vue({
+    el:"#app", // 绑定在id=app的标签上
+    store:store, // es6中 key和value一样的时候，可以写成 store
+    data:{
+      msg:"Vuex的使用"
+    },
+    components:{
+      counter
+    },
+    methods:{
+      add(){
+        this.$store.commit("increment");// 通过commit出发increment方法
+        this.$store.commit("updateName",'godbmw'); // 带参数
+      }
+    }
+  })
+</script>
+</body>
+</html>
