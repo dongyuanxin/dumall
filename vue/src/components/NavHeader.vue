@@ -13,7 +13,7 @@
     </symbol>
     <div class="navbar">
       <div class="navbar-left-container">
-        <a href="/">
+        <a href="https://github.com/godbmw/dumall">
           <img class="navbar-brand-logo" src="static/github.png">
         </a>
         测试用户名:admin
